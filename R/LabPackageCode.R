@@ -110,6 +110,12 @@ linreg <- R6Class("linreg",
                       return(self$namedvector)
                     }
 
+#' summary
+#'
+#' @return Return a similar printout as printed for lm objects
+#' @export summary
+#'
+#' @examples
                     summary <- function(){
 
                     }
