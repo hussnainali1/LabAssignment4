@@ -15,6 +15,7 @@ linreg <- R6Class("linreg",
                     calculation= 0,
                     formula = NULL,
                     data= NULL,
+                    namedvector= NULL,
 
                     initialize = function(formula, data) {
                       self$data = data
@@ -42,12 +43,74 @@ linreg <- R6Class("linreg",
                         #if(!is.na(self$calculation))
                         self$tOfEachcoefficientAmount <- self$tOfEachcoefficientAmount + self$calculation
                       }
-                      greet
+                      self$greet()
                     },
-                    greet = function() {
+                    # greet = function() {
+                    #   cat(paste0("Call:\n"))
+                    #   cat(paste0("lm(formula = Petal.Length ~ Species, data = iris) \n"))
+                    #   cat(paste0(rownames(self$BetaHat), "/n"))
+                    # }
+
+#' Print
+#'
+#' @return String containing results
+#' @export print
+#'
+#' @examples
+#'
+                    print <- function(){
                       cat(paste0("Call:\n"))
                       cat(paste0("lm(formula = Petal.Length ~ Species, data = iris) \n"))
                       cat(paste0(rownames(self$BetaHat), "/n"))
+                    }
+
+#' plot
+#'
+#' @return Create Two Graphs
+#' @export plot
+#'
+#' @examples
+#'
+                    plot <- function(){
+                      ggplot(data = s$data, mapping = aes(x = s$yHat, y = s$eHat)) + geom_point()
+
+                    }
+
+#' resid
+#'
+#' @return Return the vector of residuals eˆ.
+#' @export
+#'
+#' @examples
+#'
+                    resid <- function(){
+                      return(self$eHat)
+                    }
+
+
+#' pred
+#'
+#' @return Return the predicted values yˆ
+#' @export pred
+#'
+#' @examples
+                    pred <- function(){
+                      return(self$yHat)
+                    }
+
+#' coef
+#'
+#' @return Return the coefficients as a named vector
+#' @export coef
+#'
+#' @examples
+                    coef <- function(){
+                      self$namedvector <- as.vector(s$BetaHat)
+                      names(self$namedvector) <- c("Intercept", "Speciesversicolor", "Speciesvirginica")
+                      return(self$namedvector)
+                    }
+
+                    summary <- function(){
 
                     }
                   )
