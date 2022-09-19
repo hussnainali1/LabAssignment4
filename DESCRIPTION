@@ -1,9 +1,8 @@
 Package: LabAssignment4
-Title: What the Package Does (One Line, Title Case)
+Title: This is the solution to Lab Assignment 4 for R-Lab
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    person("Hussnain", "Ali", , "hussnainkhilgi1@gmail.com", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
