@@ -99,7 +99,7 @@ linreg <- setRefClass("linreg",
                           return(.self$yHat)
                         },
                         coef = function(){
-                          .self$namedvector <- as.vector(s$BetaHat)
+                          .self$namedvector <- as.vector(.self$BetaHat)
                           names(.self$namedvector) <- c("Intercept", "Speciesversicolor", "Speciesvirginica")
                           return(.self$namedvector)
                         },
@@ -109,6 +109,11 @@ linreg <- setRefClass("linreg",
                           newMatrix <- cbind(newMatrix, (sqrt(as.vector(diag(.self$varOfBetaHat)))))
                           newMatrix <- cbind(newMatrix, (.self$tOfEachcoefficientAmount))
                           rownames(newMatrix) <- c( "(Intercept)" , "Speciesversicolor" , "Speciesvirginica" )
+                          newEstaricVector <- c(1)
+                          # for(item in 1:length(tOfEachcoefficientAmount)){
+                          #   prob <-  pt(tOfEachcoefficientAmount[item], .self$Df)
+                          # }
+
                           base::print(newMatrix)
                           cat(paste0("Residual standerd Error ", .self$sigmaSquare, " on ", .self$Df , " Degrees of Freedom"))
 
