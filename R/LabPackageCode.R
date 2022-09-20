@@ -18,6 +18,9 @@
 #'
 #' @return Print out the coefficients and coefficient names, similar as done by the lm class.
 #' @export linreg
+#' @exportClass linreg
+#' @importFrom methods new setRefClass
+
 #'
 #' @examples
 #' data(iris)
@@ -46,8 +49,8 @@ linreg <- setRefClass("linreg",
                         initialize = function(formula, data) {
                           .self$data = data
                           .self$formula = formula
-                          .self$y <- .self$data[[formula[[2]]]]
-                          .self$x = model.matrix(formula, data)
+                          .self$y <- .self$data[[.self$formula[[2]]]]
+                          .self$x = model.matrix(.self$formula, data)
 
                           .self$BetaHat <- solve( t(.self$x)%*% .self$x ) %*% (t( .self$x) %*% .self$y)
 
@@ -72,8 +75,8 @@ linreg <- setRefClass("linreg",
                         },
 
                         print = function(){
-                          cat(paste0("Call:\n"))
-                          cat(paste0("lm(formula = Petal.Length ~ Species, data = iris) \n"))
+                          formulaObj <- as.character(.self$formula)
+                          cat("linreg(formula = ", formulaObj[2], " ", formulaObj[1], " ", formulaObj[3], ", data = iris)", "\n", sep = "")
                           cat(paste0(rownames(.self$BetaHat)))
                           cat("\n")
                           cat(paste0(.self$BetaHat))
@@ -108,17 +111,34 @@ linreg <- setRefClass("linreg",
                           newMatrix <- matrix(.self$BetaHat)
                           newMatrix <- cbind(newMatrix, (sqrt(as.vector(diag(.self$varOfBetaHat)))))
                           newMatrix <- cbind(newMatrix, (.self$tOfEachcoefficientAmount))
-                          rownames(newMatrix) <- c( "(Intercept)" , "Speciesversicolor" , "Speciesvirginica" )
-                          # for(item in 1:length(tOfEachcoefficientAmount)){
-                          #   prob <-  pt(tOfEachcoefficientAmount[item], .self$Df)
-                          # if(prob<0.01) append(newEstricVector,c("***"))
-                          # else if (prob>0.01 && prob<0.05) append(newEstricVector,c("**"))
-                          # else if (prob>0.05 && prob<0.1) append(newEstricVector,c("*"))
-                          # }
-                          # newEstricVector <-newEstricVector[-1]
-                          # newMatrix <- cbind(newMatrix, (newEstricVector))
-                          base::print(newMatrix)
-                          cat(paste0("Residual standerd Error ", .self$sigmaSquare, " on ", .self$Df , " Degrees of Freedom"))
+
+                          #rownames(.self)
+                          rownames(newMatrix) <- rownames(.self$BetaHat)
+
+                           for(item in 1:length(tOfEachcoefficientAmount)){
+                             prob <-  pt(tOfEachcoefficientAmount[item], .self$Df, lower.tail=FALSE)
+                           if(prob<0.01){
+                             newEstricVector <- append(newEstricVector,c("***"))
+                             }
+                           else if (prob>0.01 && prob<0.05) {
+                             newEstricVector <- append(newEstricVector,c("**"))}
+                           else if (prob>0.05 && prob<0.1) {
+                             newEstricVector <- append(newEstricVector,c("*"))
+                             }
+                           else {
+                             newEstricVector <- append(newEstricVector,c(""))}
+                           }
+                           newEstricVector <-newEstricVector[-1]
+                           newMatrix <- cbind(newMatrix, newEstricVector)
+                           colnames(newMatrix) <- NULL
+                           rowNamesVec <- rownames(newMatrix)
+                           for(item in 1:nrow(newMatrix)){
+                             cat(rowNamesVec[item]," ")
+                             cat(newMatrix[item,],"\n")
+                           }
+
+
+                          cat(paste0("Residual standard error: ", sqrt(.self$sigmaSquare), " on ", .self$Df , " degrees of freedom"))
 
                         }
                       )
