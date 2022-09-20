@@ -1,0 +1,53 @@
+---
+title: "LinReg"
+author: "Hussnain Ali"
+#output: rmarkdown::html_vignette
+output: rmarkdown::html_document
+
+vignette: >
+  %\VignetteIndexEntry{LinReg}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r echo=TRUE }
+library(LabAssignment4)
+```
+
+Here we Load data Set and create an object of the class of this package and then we call the print method of that class with that object
+
+```{r echo=TRUE}
+data(iris)
+tempObj <- linreg$new(Petal.Length~Species, data = iris)
+tempObj$print()
+```
+
+
+
+This class has resid() method that return the vector of residuals eˆ.
+```{r echo=TRUE}
+tempObj$resid()
+```
+
+
+This class has pred() method return the predicted values yˆ.
+```{r echo=TRUE}
+tempObj$pred()
+```
+
+This class has coef() method  return the coefficients as a named vector.
+```{r echo=TRUE}
+tempObj$coef()
+```
+
+This class has summary() method return a similar printout as printed for lm objects, but you only need to present the coefficients with their standard error, t-value and p-value as well as the estimate of σˆ and the degrees of freedom in the model.
+```{r echo=TRUE}
+tempObj$summary()
+```

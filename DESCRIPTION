@@ -3,13 +3,17 @@ Title: This is the solution to Lab Assignment 4 for R-Lab
 Version: 0.0.0.9000
 Authors@R: 
     person("Hussnain", "Ali", , "hussnainkhilgi1@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: This package has a class and we can create an object of that class and perform operation on that.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
-    ggplot2
+    ggplot2,
+    methods
+VignetteBuilder: knitr
