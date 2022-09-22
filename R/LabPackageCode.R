@@ -76,7 +76,7 @@ linreg <- setRefClass("linreg",
 
                         print = function(){
                           formulaObj <- as.character(.self$formula)
-                          cat("linreg(formula = ", formulaObj[2], " ", formulaObj[1], " ", formulaObj[3], ", data = iris)", "\n", sep = "")
+                          cat("linreg(formula = ", format(.self$formula), ", data = iris)", "\n", sep = "")
                           cat(paste0(rownames(.self$BetaHat)))
                           cat("\n")
                           cat(paste0(.self$BetaHat))
