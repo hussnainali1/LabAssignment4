@@ -1,8 +1,11 @@
 Package: LabAssignment4
 Title: This is the solution to Lab Assignment 4 for R-Lab
 Version: 0.0.0.9000
-Authors@R: 
-    person("Hussnain", "Ali", , "hussnainkhilgi1@gmail.com", role = c("aut", "cre"))
+Authors@R: c( person("hussnain", "ali", , "hussnainkhilgi1@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID")), 
+            person("attaullah", "khan", , "attaullahkhan.comsats@gmail.com", role = "ctb",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+           )
 Description: This package has a class and we can create an object of that class and perform operation on that.
 License: MIT + file LICENSE
 Encoding: UTF-8

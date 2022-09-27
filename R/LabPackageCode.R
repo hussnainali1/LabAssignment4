@@ -20,6 +20,7 @@
 #' @export linreg
 #' @exportClass linreg
 #' @importFrom methods new setRefClass
+#' @import ggplot2
 
 #'
 #' @examples
@@ -82,18 +83,31 @@ linreg <- setRefClass("linreg",
                           cat(paste0(.self$BetaHat))
 
                         },
+                        # plot = function(){
+                        #  plot1 <-  ggplot2::ggplot(data = .self$data, mapping = ggplot2::aes(x = .self$yHat, y = .self$eHat)) +
+                        #   ggplot2::geom_point() +
+                        #   ggplot2::stat_summary(fun = median, geom = "line")
+                        #
+                        #  base::print(plot1)
+                        #
+                        #   plot2 <- ggplot2::ggplot(data = .self$data, mapping = ggplot2::aes(x =.self$yHat , y = sqrt(abs((.self$eHat - mean(.self$eHat) ) / sd(.self$eHat) ) ))) +
+                        #     ggplot2::geom_point() +
+                        #     ggplot2::stat_summary(fun = median, geom = "line")
+                        #
+                        #   base::print(plot2)
+                        # },
                         plot = function(){
-                         plot1 <-  ggplot2::ggplot(data = .self$data, mapping = ggplot2::aes(x = .self$yHat, y = .self$eHat)) +
-                          ggplot2::geom_point() +
-                          ggplot2::stat_summary(fun = median, geom = "line")
-
-                         base::print(plot1)
+                          plot1 <-  ggplot2::ggplot(data = .self$data, mapping = ggplot2::aes(x = .self$yHat, y = .self$eHat)) +
+                            ggplot2::geom_point() +
+                            ggplot2::stat_summary(fun = median, geom = "line") +
+                            ggplot2::ggtitle("Residuals vs Fitted")
+                          base::print(plot1 + ggplot2::labs(y = "Residuals", x = "Fitted values  \n lm(Petal.Length ~ Species)"))
 
                           plot2 <- ggplot2::ggplot(data = .self$data, mapping = ggplot2::aes(x =.self$yHat , y = sqrt(abs((.self$eHat - mean(.self$eHat) ) / sd(.self$eHat) ) ))) +
                             ggplot2::geom_point() +
-                            ggplot2::stat_summary(fun = median, geom = "line")
-
-                          base::print(plot2)
+                            ggplot2::stat_summary(fun = median, geom = "line")+
+                            ggplot2::ggtitle("Scale−Location")
+                          base::print(plot2 + ggplot2::labs(y = "sqrt(abs(Standardized residuals) ", x = "Fitted values \n lm(Petal.Length ~ Species)"))
                         },
                         resid = function(){
                           return(.self$eHat)
